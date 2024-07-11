@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do you love me?</title>
+    <link rel="shortcut icon" href="./images/heart-icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="main">
+        <div class="heading">
+            <img class="image" src="./images/girl-kissing-boy.gif" alt="" loop>
+            <h1>Do you love me?</h1>
+        </div>
+        <div>
+            <button id="Yes-button">Yes</button>
+            <button id="move-button">No</button>
+        </div>
+    </div>
+
+    <!-- Popup container -->
+    <div id="popup" class="popup">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <div class="heading">
+            <img class="image" src="./images/love-you-more.gif" alt="" loop>
+            <h1>Aww! I love you too!!????</h1>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        function getRandomInt (min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+
+        const moveButton = document.getElementById("move-button");
+        const main = document.querySelector(".main");
+        const noButton = document.getElementById("Yes-button");
+        let hoverCount = 0;
+        let countTreshold = getRandomInt(3, 8)
+
+        var screenWidth = window.screen.width;
+        var screenHeight = window.screen.height;
+
+        moveButton.addEventListener('mouseenter', () => {
+            console.log("CLICKED!");
+
+            moveButton.style.display = "none";
+
+            const moveButtonNew = document.createElement("button");
+
+            moveButtonNew.classList.add("moving-button")
+            moveButtonNew.textContent = "NOOOOO(Don't touch)";
+            moveButtonNew.style.top = getRandomInt(1, screenHeight - 25) + "px";
+            moveButtonNew.style.bottom = getRandomInt(1, screenHeight - 25) + "px";
+            moveButtonNew.style.left = getRandomInt(1, screenWidth - 25) + "px";
+            moveButtonNew.style.right = getRandomInt(1, screenWidth - 25) + "px";
+
+            main.appendChild(moveButtonNew);
+
+            document.querySelector(".moving-button").addEventListener('mouseenter', () => {
+
+                moveButtonNew.style.top = getRandomInt(1, screenHeight - 25) + "px";
+                moveButtonNew.style.bottom = getRandomInt(1, screenHeight - 25) + "px";
+                moveButtonNew.style.left = getRandomInt(1, screenWidth - 25) + "px";
+                moveButtonNew.style.right = getRandomInt(1, screenWidth - 25) + "px";
+                hoverCount++;
+                if (hoverCount == countTreshold) {
+     
+                    moveButtonNew.style.display = "none";
+                    openPopup();
+                }
+            })
+        })
+
+        noButton.addEventListener("click", () => {
+            openPopup();
+        })
+
+
+        function openPopup () {
+            document.getElementById("popup").style.display = "block";
+        }
+
+        function closePopup () {
+            document.getElementById("popup").style.display = "none";
+        }
+
+    </script>
+</body>
+</html>
